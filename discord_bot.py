@@ -61,7 +61,7 @@ async def start(ctx, arg1, arg2):
 
 @bot.command(pass_context=False)
 async def stop(ctx):
-    check_site.stop()
+    check_site.cancel()
     logging.info('цикл остановлен')
     print('цикл остановлен')
     await ctx.send('цикл остановлен')  
