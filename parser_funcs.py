@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 
 import solver
-    
 def login(driver, key,data):
     surname = driver.find_element(By.ID, "surname")
     name = driver.find_element(By.ID, "name")
@@ -48,6 +47,7 @@ def get_data(driver):
     text = tabel.get_attribute('innerHTML')
     driver.close()
     return {'tabel': text, 'image': path}
+
 
 def check(data, silent=False):
     options = Options()

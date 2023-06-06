@@ -1,3 +1,5 @@
+import asyncio
+import functools
 from time import sleep
 from selenium import webdriver
 import discord
@@ -18,11 +20,15 @@ bot = commands.Bot(command_prefix='!', intents=intent)
 
 channel_id = data.discord['channel_id']
 
+@functools.wraps(parser_funcs.check)
+async def async_check(*args, **kwargs):
+    return (await asyncio.to_thread(parser_funcs.check, *args, **kwargs))
+
 @bot.command(pass_context=False)
 async def check(ctx):
     flag = False
     await ctx.send('падажди')
-    out = parser_funcs.check(data=data.data, silent=False)
+    out = (await async_check(data=data.data, silent=False))
     if out:
         with open('tabel.html') as old_tabel:
             if out['tabel'] == old_tabel.read():
@@ -64,7 +70,7 @@ async def stop(ctx):
 async def check_site(ctx, minutes, silent):
     check_site.change_interval(minutes=minutes)
     flag = False
-    out = parser_funcs.check(data=data.data, silent=True)
+    out = (await async_check(data=data.data, silent=False)) 
     if out:
         with open('tabel.html') as old_tabel:
             if out['tabel'] == old_tabel.read():
