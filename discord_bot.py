@@ -72,8 +72,8 @@ async def check_site(ctx, minutes, silent):
     flag = False
     out = (await async_check(data=data.data, silent=False)) 
     if out:
-        with open('tabel.html') as old_tabel:
-            if out['tabel'] == old_tabel.read():
+        with open('tabel.html') as table:
+            if out['tabel'] == table.read():
                 if not silent: await ctx.send('всё как было', file = discord.File("out.png"))
                 logging.info(f"цикличная проверка: нет новых данных")
                 print(f"цикличная проверка: нет новых данных")
@@ -88,7 +88,6 @@ async def check_site(ctx, minutes, silent):
             with open('tabel.html','w') as table:
                 table.write(out['tabel'])
     else:
-        check_site.stop()
         logging.error('цикличная проверка: кака ято ошибка')
         print('цикличная проверка: кака ято ошибка')
         await ctx.send('Ошибка')

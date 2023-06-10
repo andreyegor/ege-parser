@@ -45,7 +45,6 @@ def get_data(driver):
     tabel = driver.find_element(By.XPATH,f"""//*[@id="table-container"]/table""")
     tabel.screenshot(path)
     text = tabel.get_attribute('innerHTML')
-    driver.close()
     return {'tabel': text, 'image': path}
 
 
@@ -53,8 +52,8 @@ def check(data, silent=False):
     options = Options()
     if silent:
         options.headless = True
-    for i in range(10):
-        driver = webdriver.Firefox(options=options)
+        
+    with webdriver.Firefox(options=options) as driver:
         driver.maximize_window()
         driver.get("https://checkege.rustest.ru/")
         try:
@@ -64,14 +63,10 @@ def check(data, silent=False):
             if driver.current_url == 'https://checkege.rustest.ru/?':
                 sleep(1)
                 login(driver, 'https://checkege.rustest.ru/?', data)
-            break
         except:
-            driver.close()
-    else:
-        return False
+            return False
             
-
-    if driver.current_url == 'https://checkege.rustest.ru/exams':
-        sleep(1)
-        return get_data(driver)
+        if driver.current_url == 'https://checkege.rustest.ru/exams':
+            sleep(1)
+            return get_data(driver)
 
