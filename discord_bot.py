@@ -90,7 +90,7 @@ async def check_site(ctx, minutes, silent):
     else:
         logging.error('цикличная проверка: кака ято ошибка')
         print('цикличная проверка: кака ято ошибка')
-        await ctx.send('Ошибка')
+        if not silent: await ctx.send('Ошибка')
 
 
 if __name__ == "__main__":
