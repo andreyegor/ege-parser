@@ -79,7 +79,6 @@ async def check_site(ctx, minutes, silent):
                 print(f"цикличная проверка: нет новых данных")
             else:
                 await ctx.send('вау новое появилось', file = discord.File("out.png"))
-                await ctx.send('🙃', file = discord.File(out['image']))
                 logging.info(f"цикличная проверка: новые данные")
                 print(f"цикличная проверка: новые данные")
                 flag = True
