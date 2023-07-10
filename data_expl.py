@@ -9,4 +9,5 @@ log_in_data = {
 
 discord = {
     'token':'Токен дискорд',
+    'channel_id': 'оставить пустым'
 }
